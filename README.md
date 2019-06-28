@@ -13,6 +13,6 @@ Het-SBM fits data over a range of candidate models or candidate number of cluste
 Next, we describe parameters related to iterations:  t_max is the maximum number of steps in the M-step (default value is 10), h_max  is the maximum number of steps in the E-step (default value is 10). Convergence criterion for the  update of taus is given by threshold_h (default value is 10^-10), while convergence criterion for betas and alphas is given by threshold_psi (default value is set to 10^-10). 
 
 To fit regression coefficients (betas) within M-step, the user will have two choices. 
-- By setting method = "Firth", the user will obtain firth type estimates for betas using the function firth_bs().
-- By setting method = "MLE", the user will obtain maximum likelihood estimates (MLE) using the function no_firth_bs().
-In both options, convergence criterion for betas  is given by the threshold_lik (default value is 10^-10), the maximum number of steps in a logistic regression fitting is given by M_iter (default value is 10), maxstep is the maximal absolute variation in beta value (default value is 5), step-halving parameter is half_iter (default value is 5). 
+- By setting method = "Firth", the user will obtain Firth type estimates for betas using the function firth_bs().
+- By setting method = "MLE", the user will obtain Maximum Likelihood estimates (MLE) using the function no_firth_bs().
+In both options, the convergence criterion for betas  is given by the threshold_lik (default value is 10^-10), the maximum number of steps in a logistic regression fitting is given by M_iter (default value is 10), the maximal absolute variation in beta value is given by the maxstep (default value is 5) while the step-halving parameter is half_iter (default value is 5). 
