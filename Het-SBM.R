@@ -33,7 +33,7 @@ Het-SBM<-function(X,D,qmin,qmax, t_max=10, h_max=10,threshold_h=10^-10,tau_min=1
             ##############################################
             attempts = 0
             while(attempts < 30){
-              Z_all <- tryCatch(expr = {Kmeans(X_all,Q,method=kmeanType,iter.max = kmeanMax + attempts)$cluster},
+              Z_all <- tryCatch(expr = {amap::Kmeans(X_all,Q,method=kmeanType,iter.max = kmeanMax + attempts)$cluster},
                                 error = function(e) e,
                                 warning = function(w) w)
               if(inherits(Z_all, "error") || inherits(Z_all, "warning")){
