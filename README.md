@@ -27,6 +27,6 @@ Initialisation: There are 4 main initialisation strategies which can be chosen u
 
 4. When startType  is set  to  "Hclust", then the algorithm will use hierarchical clustering from stats package with distance metric set to "manhattan", while method is set to "ward.D2". 
 
-It is worth highlighting that for ("KMeans" and "Hclust") options it is also possible to pick a specific subject whose data will be used for initialisation. This can be handled by iSubjStartingPoint parameter. For example, iSubjStartingPoint = 10 indicates that the network corresponding to the 10th subject will be used for initialisation. 
+It is worth highlighting that for "KMeans" and "Hclust" options it is also possible to pick a specific subject whose data will be used for initialisation. This can be handled by iSubjStartingPoint parameter. For example, iSubjStartingPoint = 10 indicates that the network corresponding to the 10th subject will be used for initialisation. 
 
 
