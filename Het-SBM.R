@@ -20,13 +20,6 @@ Het-SBM <- function(X,D,qmin,qmax, t_max = 10, h_max = 10,threshold_h = 10^-10,
       print(paste("Model_Q = ",Q))
       while(t <= t_max & delta_psi > threshold_psi){
         print(paste("t_iteration=",t))
-          # require(stats)
-          # X_all<-apply(X,c(1,2),sum)
-          # Z_all<-kmeans(X_all,Q,30,30)$cluster
-          # tau<-matrix(tau_min,n,Q)	
-          # for(q in 1:Q){				#Tau zero
-          # 	tau[Z_all==q,q]<-1-(Q-1)* tau_min
-          # }
         if(t == 1){
           X_all = apply(X,c(1,2),function(x)sum(x))      # Sum data over subjects
           if(startType == "KMeans"){
@@ -128,20 +121,6 @@ Het-SBM <- function(X,D,qmin,qmax, t_max = 10, h_max = 10,threshold_h = 10^-10,
           while(h <= h_max & delta_h > threshold_h){
             tau_previous =  tau	 					
             for(i in 1:n){
-              # tmp <- log(Alpha)
-              # for (k in 1:K){
-              #   for (l in 1:Q){									
-              #     tmp1 <- tcrossprod(D[k,],beta[,l,])
-              #     tmp2 <- sum(tau[X[i,,k]==1,l]) * tmp1 - sum(tau[-i,l]) * log(1+exp(tmp1))  
-              #     # if (any(l== monoBlock)) tmp2 [l] <- 0
-              #     tmp <- tmp + tmp2
-              #   }
-              # }
-              # posTerm <- apply(tmp1, 3, function(x){ a <- tcrossprod(tau, x); return(sum(a[X[i,,]==1])) })
-              # negTerm <- apply(logOnePlusExpTmp1, 3, function(x) sum(tcrossprod(tau[-i,], x)))
-              
-              # tau[i,]=tau[i,]/(sum(tau[i,]))   		      # normalising after eq. 10 
-              
               posTerm                       = crossprod(as.numeric(tau), Xtmp1[i,,])
               negTerm                       = tcrossprod(colSums(tau[-i,]), sumLogOnePlusExpTmp1)
               tmp                           = log(Alpha) + posTerm - negTerm
@@ -225,15 +204,10 @@ Het-SBM <- function(X,D,qmin,qmax, t_max = 10, h_max = 10,threshold_h = 10^-10,
             gamma = tcrossprod(tau[,q],tau[,l])
             gamma = gamma + t(gamma)    
           }
-          # if (q==l & any(l== monoBlock)){
-          #   
-          # } else {
-          # }					
             tmp1 =  D %*% beta[q,l,]			
             Qlik =  Qlik + crossprod(apply(X,3, function(x) sum(gamma[x==1])), tmp1) - (sum(gamma)-sum(diag(gamma))) * sum(log(1+exp(tmp1)))
         }
       }
-        # warning(paste("Failed to converge to Model with ",Q," groups",sep=""))
       Qlik    = 0.5*Qlik
       ICL     = Qlik - P*Q*(Q+1)/4*log(K*n*(n-1)/2) - (Q-1)/2*log(n)
       part    = apply(tau,1,function(x)which.max(x))
