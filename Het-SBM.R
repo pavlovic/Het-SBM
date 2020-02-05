@@ -123,7 +123,7 @@ Het-SBM <- function(X,D,qmin,qmax, t_max = 10, h_max = 10,threshold_h = 10^-10,
             for(i in 1:n){
               posTerm                       = crossprod(as.numeric(tau), Xtmp1[i,,])
               negTerm                       = tcrossprod(colSums(tau[-i,]), sumLogOnePlusExpTmp1)
-              tmp                           = log(Alpha) + posTerm - negTerm
+              tmp                           = log(alpha) + posTerm - negTerm
               tau[i,]                       =  1/colSums(exp(outer(as.numeric(tmp), as.numeric(tmp), FUN="-")))
               tau[i,tau[i,]< tau_min]       = tau_min                                 # smaller than smallest is set to our view of small :)
               tau[i,which.max(tau[i,])[1]]  = (1-sum(tau[i,-which.max(tau[i,])[1]]))  # to keep normalization in check!
@@ -135,10 +135,10 @@ Het-SBM <- function(X,D,qmin,qmax, t_max = 10, h_max = 10,threshold_h = 10^-10,
         }# for all t that are >=2 we eneter to optimised tau
         monoBlock =  which(sapply(1:Q, function(x) length(which(apply(tau, 1, which.max)==x))) == 1) # Check for the monoblock
         if(t > 1) {
-          Alpha_previous =  Alpha
+          alpha_previous =  alpha
         }  
-        Alpha     =  apply(tau,2,sum)/n
-        # print(Alpha)
+        alpha     =  apply(tau,2,sum)/n
+        # print(alpha)
         if (t == 1){
           Emp_Pis = matrix(0,Q,Q)  # Emp_Pis are initail guess for intercept. 
           for(q in 1:Q){
@@ -174,9 +174,9 @@ Het-SBM <- function(X,D,qmin,qmax, t_max = 10, h_max = 10,threshold_h = 10^-10,
         beta = tmp$beta
         FI   = tmp$FI
         if (t>1) {
-          delta_psi  =  max(abs((Alpha-Alpha_previous)/Alpha_previous),abs((beta-beta_previous)/beta_previous), na.rm = TRUE)
+          delta_psi  =  max(abs((alpha-alpha_previous)/alpha_previous),abs((beta-beta_previous)/beta_previous), na.rm = TRUE)
         }  
-        varBound[t]  =  sum(tau%*%log(Alpha))-sum(tau*log(tau))
+        varBound[t]  =  sum(tau%*%log(alpha))-sum(tau*log(tau))
         for (q in 1:Q){
           for (l in q:Q){
             if(q == l){
@@ -195,7 +195,7 @@ Het-SBM <- function(X,D,qmin,qmax, t_max = 10, h_max = 10,threshold_h = 10^-10,
         }
         t =  t +1
       }#end of while loop for t
-      Qlik = 2 * sum(tau%*%log(Alpha))
+      Qlik = 2 * sum(tau%*%log(alpha))
       for (q in 1:Q){
         for (l in q:Q){
           if(q == l){
@@ -224,7 +224,7 @@ Het-SBM <- function(X,D,qmin,qmax, t_max = 10, h_max = 10,threshold_h = 10^-10,
     if(length(monoBlock) >0) warning(paste("ERMM with ", Q, "classes: presence of mono-blocks",sep="" ))
     rezultat[[Q]]             = list()
     rezultat[[Q]]$tau         = tau
-    rezultat[[Q]]$Alpha       = Alpha
+    rezultat[[Q]]$alpha       = alpha
     rezultat[[Q]]$beta        = beta
     rezultat[[Q]]$ICL         = ICL
     rezultat[[Q]]$VB          = varBound
