@@ -82,16 +82,16 @@ Het-SBM <- function(X,D,qmin,qmax, t_max = 10, h_max = 10,threshold_h = 10^-10,
             #      Initialise Z, using Hieararchical Clustering algorithm         #
             #######################################################################
             if (is.null(iSubjStartingPoint)){
-              X_all_d=dist(X_all,method="manhattan")
+              X_all_d = stats::dist(X_all,method="manhattan")
             } else {
               if (length(iSubjStartingPoint) == 1) {
-                X_all_d=dist(X[,,iSubjStartingPoint],method="manhattan")
+                X_all_d = stats::dist(X[,,iSubjStartingPoint],method="manhattan")
               } else {
-                X_all_d=dist(apply(X[,,iSubjStartingPoint],c(1,2),function(x)sum(x)),method="manhattan")
+                X_all_d = stats::dist(apply(X[,,iSubjStartingPoint],c(1,2),function(x)sum(x)),method="manhattan")
               }
             }
-            tmp=hclust(X_all_d,method="ward.D2")
-            Z_all=cutree(tmp,k=Q)
+            tmp   = stats::hclust(X_all_d, method ="ward.D2")
+            Z_all = stats::cutree(tmp, k = Q)
           }
           # Build tau using the first guess of Z
           tau = matrix(tau_min,n,Q)              #populate tau with minimum values we cannot deal with zero
