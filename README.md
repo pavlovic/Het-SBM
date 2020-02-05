@@ -1,12 +1,8 @@
 # Het-SBM
-This project is providing fitting procedures for the Het-SBM model described in the thesis ['Generalised Stochastic Blockmodels and their Applications in the Analysis of Brain Networks' ](https://core.ac.uk/download/pdf/42619639.pdf) Chapter 4, Pavlovic 2015 (see [the link to the paper](https://www.biorxiv.org/content/10.1101/672071v1.abstract)  based on this chapter). 
+The toolbox is providing the fitting procedures for multi-subject heterogeneous stochastic blockmodel termed `Het-SBM`. Het-SBM has been first described in the thesis ['Generalised Stochastic Blockmodels and their Applications in the Analysis of Brain Networks' ](https://core.ac.uk/download/pdf/42619639.pdf) Chapter 4, Pavlovic 2015 and then in [the paper](https://www.biorxiv.org/content/10.1101/672071v1.abstract). 
 # Variables Specified by User
-In this section, we give a list of variables supplied by a user.
-
-X is a 3-dimensional array which encodes adjacency matrices for each subject. The dimensions of X are nodes (n) by nodes (n) by subjects (K), where n stands for a total number of nodes in a network and K stands for a total number of subjects in the study.  For example, X[ , ,1] is a square adjacency matrix corresponding to the first subject. 
-
-D is a 2-dimensional array (matrix) which encodes covariates of interest (i.e., design matrix). Design matrix D is given as subjects (K) by covariates (P). It is worth mentioning that P is also counting intercept in a linear model as well as covariates of interest like age, gender, patient/control etc. 
-
+The HetSBM function expects two datasets: X (adjacency data) which enters the analysis in the form of a tensor and D (covariates) which comes into the analysis in the form of a matrix. In particular, X is a 3-dimensional tensor (array) which encodes adjacency matrices for each subject. The dimension of X is n by n by K, where n stands for a total number of nodes in a network and K stands for a total number of subjects in the study.  For example, X[ , ,1] is a square adjacency matrix corresponding to the first subject. Individual subject matrices (i.e. X[, ,1]) are assumed to be binary, symmetric and without self-connected nodes (i.e. the principal diagonal of X[,,k]=0). Covariates of interest are encoded in the design matrix D.  The design matrix D is K by P, where K is the total number of subjects, and P is the total number of covariates in the model plus the intercept.
+# Input Function Variables
 Het-SBM fits data over a range of candidate models or candidate number of clusters. These are specified by parameters 'qmin' (indicating the smallest number of clusters in your data) and 'qmax' (indicating the largest number of clusters in your data). By setting qmin=2 and qmax=5, the function will fit 4 models, so that the first model has 2 clusters, second 3 clusters, third 4 clusters and fourth 5 clusters. As noted in the referenced work the model which maximises ICL criterion is the final. 
 
 
