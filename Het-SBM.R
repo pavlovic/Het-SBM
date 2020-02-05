@@ -1,6 +1,8 @@
-Het-SBM<-function(X,D,qmin,qmax, t_max=10, h_max=10,threshold_h=10^-10,tau_min=10^-10, threshold_lik=10^-10,
-                      M_iter=10,threshold_psi=10^-10,startType="KMeans",kmeanType = "correlation",kmeanMax=30,startZ=NULL,iSubjStartingPoint = NULL,method="Firth"){
-  
+Het-SBM <- function(X,D,qmin,qmax, t_max = 10, h_max = 10,threshold_h = 10^-10,
+                     tau_min = 10^-10, threshold_lik = 10^-10, M_iter = 10,
+                     threshold_psi = 10^-10, startType = "KMeans",
+                     kmeanType = "correlation", kmeanMax = 30,startZ = NULL,
+                     iSubjStartingPoint = NULL, method = "Firth"){
   n   = dim(X)[1]  # Number of nodes
   K   = dim(X)[3]  # Number of subjects
   P   = dim(D)[2]  # Number of covariates
